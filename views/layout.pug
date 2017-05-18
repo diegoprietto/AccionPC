@@ -1,0 +1,51 @@
+doctype html
+html
+	head
+		title="Acciones PC"
+
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+
+		link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
+
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous")
+
+		link(href="font-awesome-4.7.0/css/font-awesome.min.css", rel="stylesheet")
+
+		link(rel='shortcut icon', type='image/x-icon', href='/images/favicon.ico')
+
+		link(href="css/layout.css", rel="stylesheet")
+
+		block VistaLinks
+
+	body
+		div.navbarEstatico
+			nav.navbar.navbar-default
+				.container-fluid
+					// Brand and toggle get grouped for better mobile display
+					.navbar-header
+						button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+							span.sr-only Toggle navigation
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a.navbar-brand(href='#') Acciones PC
+
+					// Collect the nav links, forms, and other content for toggling
+					#bs-example-navbar-collapse-1.collapse.navbar-collapse
+						ul.nav.navbar-nav
+							//- Lista de componentes dentro del menú
+						form.navbar-form.navbar-left
+							//- Controles Izquierda
+						ul.nav.navbar-nav.navbar-right
+							//- Controles Derecha
+							li
+								a(href='/')
+									|Ir a Home
+									span.fa.fa-home(style="margin-left: 5px")
+
+					// /.navbar-collapse
+				// /.container-fluid
+		//- Espacio ocupado por el nav
+		div(style={height: '70px'})
+
+		block VistaCuerpo

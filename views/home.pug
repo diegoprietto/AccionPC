@@ -1,0 +1,63 @@
+extends layout.pug
+
+block VistaLinks
+	script(src="scripts/home.js")
+	link(href="css/home.css", rel="stylesheet")
+
+block VistaCuerpo
+
+	.btn-toolbar(role='toolbar', aria-label='...')
+		.panel.panel-primary
+			.panel-heading Control de Volumen
+			.panel-body
+
+				.btn-toolbar(role='toolbar', aria-label='...')
+					.btn-group(role='group', aria-label='...')
+						button.btn.btn-default(type='button', onclick="CambiarVolumen('BV', true);")
+							|««
+						button.btn.btn-default(type='button', onclick="CambiarVolumen('BV', false);")
+							|«
+					.btn-group(role='group', aria-label='...')
+						button.btn.btn-info(type='button', onclick="botonObtenerVolumenActual();")
+							i.fa.fa-spinner.fa-spin#loadingVolumen(aria-hidden='true')
+							i#valorVolumen(aria-hidden='true', style="display: none")
+					.btn-group(role='group', aria-label='...')
+						button.btn.btn-default(type='button', onclick="CambiarVolumen('SV', false);")
+							|»
+						button.btn.btn-default(type='button', onclick="CambiarVolumen('SV', true);")
+							|»»
+
+				br
+
+				.btn-toolbar(role='toolbar', aria-label='...')
+					.btn-group(role='group', aria-label='...', onclick="NoSilenciar();")
+						button.btn.btn-default(type='button')
+							span.fa-stack.fa-lg
+								i.fa.fa-volume-up.fa-stack-1x
+								i.fa.fa-square-o.fa-stack-2x
+					.btn-group(role='group', aria-label='...', onclick="botonObtenerMuteActual();")
+						button.btn.btn-info(type='button')
+							span.fa-stack.fa-lg
+								i.fa.fa-spinner.fa-stack-1x.fa-spin#loadingMute
+								i.fa.fa-square-o.fa-stack-2x#loadingContorno
+					.btn-group(role='group', aria-label='...', onclick="Silenciar();")
+						button.btn.btn-default(type='button')
+							span.fa-stack.fa-lg
+								i.fa.fa-volume-up.fa-stack-1x
+								i.fa.fa-ban.fa-stack-2x.text-danger
+
+
+	.btn-toolbar(role='toolbar', aria-label='...')
+		.panel.panel-success
+			.panel-heading Opciones de Apagado
+			.panel-body.BotonesSeparados
+
+				btn-group(role='group', aria-label='...')
+					button.btn.btn-warning(type='button', onclick="Apagar('H');")
+						|Hibernar
+					button.btn.btn-warning(type='button', disabled="disabled")
+						|Suspender
+					button.btn.btn-danger(type='button', onclick="Apagar('A');")
+						|Apagar
+					button.btn.btn-danger(type='button', onclick="Apagar('R');")
+						|Reiniciar

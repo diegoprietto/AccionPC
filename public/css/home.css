@@ -1,0 +1,9 @@
+.BotonesSeparados button{
+	margin-right: 15px;
+	margin-bottom: 10px
+}
+
+.btn-toolbar{
+	margin-right: 10px !important;
+	margin-left: 10px !important;
+}

@@ -76,6 +76,10 @@ app.post('/accion', function(req, res){
       case "GM":
       case "M":
       case "NM":
+        //Determinar si se cambió el dispositivo, si es asi dejarlo por defecto en esta ejecución
+        if (datos.nombreDispositivo)
+          nombreSpeaker = datos.nombreDispositivo;
+
         //Ejecutar exe según la acción
         EjecutarExe([datos.accion, nombreSpeaker], res);
         break;
@@ -89,7 +93,7 @@ app.post('/accion', function(req, res){
       break;
       case "LS":
         //Listar nombres de dispositivos
-        EjecutarExe([], res);
+        EjecutarExe([datos.accion], res);
       break;
       default:
         //Entrada inválida

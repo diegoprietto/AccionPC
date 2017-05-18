@@ -1,8 +1,7 @@
 "use strict";
 
 $(document).ready(function () {
-	obtenerVolumenActual();
-	obtenerMuteActual();
+	obtenerListaDispositivos();
 });
 
 function EjecutarAjax(error, datos, callback){
@@ -43,8 +42,15 @@ function CambiarVolumenOk(response){
 }
 
 //Ejecuta llamada Ajax para saber el valor del volumen actual
-function obtenerVolumenActual(){
-	EjecutarAjax(obtenerVolumenActualError, {"accion": "GV"}, obtenerVolumenActualOk);
+function obtenerVolumenActual(nombreDispositivo){
+	var data = {"accion": "GV"};
+
+	//Si existe el nombre pasarlo al server
+	if (nombreDispositivo){
+		data.nombreDispositivo = nombreDispositivo;
+	}
+
+	EjecutarAjax(obtenerVolumenActualError, data, obtenerVolumenActualOk);
 }
 
 //Colocar el valor en el control central del volumen
@@ -70,8 +76,15 @@ function botonObtenerVolumenActual(){
 }
 
 //Ejecuta llamada Ajax para saber si el dispositivo esta silenciado o no
-function obtenerMuteActual(){
-	EjecutarAjax(obtenerMuteActualError, {"accion": "GM"}, obtenerMuteActualOk);
+function obtenerMuteActual(nombreDispositivo){
+	var data = {"accion": "GM"};
+
+	//Si existe el nombre pasarlo al server
+	if (nombreDispositivo){
+		data.nombreDispositivo = nombreDispositivo;
+	}
+
+	EjecutarAjax(obtenerMuteActualError, data, obtenerMuteActualOk);
 }
 
 function obtenerMuteActualOk(response){
@@ -101,7 +114,7 @@ function Silenciar(){
 	EjecutarAjax(SilenciarError, {"accion": "M"}, SilenciarOk(true));
 }
 
-function SilenciarError(){
+function SilenciarError(response){
 	alert("Se produjo un error: " + response.Mensaje);
 }
 
@@ -112,4 +125,55 @@ function SilenciarOk(mute){
 	if (mute){
 		$("#loadingContorno").removeClass("fa-square-o").addClass("fa-ban").addClass("text-danger");
 	}
+}
+
+//Añade la lista recibida como parámetros al combo de dispositivos de sonido
+//Ejemplo de parámetro: lista = ["Item 1", "Item 2", "Item 3"];
+function CargarDatosCombo(lista){
+	//Vaciar combo
+	$("#DatosComboDispositivos").empty();
+
+	//Rellenar datos nuevos
+	$.each(lista, function(index, value){
+		$("#DatosComboDispositivos").append("<li><a href='#'>" + value + "</a></li>");
+	});
+
+	//Añadir evento a los items
+	$("#DatosComboDispositivos a").click(function(object) {
+		//Obtener el texto del item seleccionado
+		var dispositivoSel = object.target.text.replace("\n","");
+
+		//Setear al combo
+		ActualizarTituloCombo(dispositivoSel);
+
+		obtenerVolumenActual(dispositivoSel);
+		obtenerMuteActual(dispositivoSel);
+	});
+}
+
+//Cambia el título del combo de dispositivos
+function ActualizarTituloCombo(titulo){
+	$("#TituloComboDispositivos").text(titulo);
+}
+
+//Ejecuta llamada Ajax para obtener la lista de dispositivos de audio disponibles
+function obtenerListaDispositivos(){
+	EjecutarAjax(obtenerListaDispositivosError, {"accion": "LS"}, obtenerListaDispositivosOk);
+}
+
+function obtenerListaDispositivosError(response){
+	alert("Se produjo un error: " + response.Mensaje + "\nReinicie la página, si el problema persiste contacte al desarrollador");
+}
+
+function obtenerListaDispositivosOk(response){
+	var lineas = response.Mensaje.split("\n");
+
+	if (lineas && lineas.length  && lineas.length > 2){
+		lineas = lineas.slice(1, lineas.length);
+
+		CargarDatosCombo(lineas);
+	}
+
+	//Cambiar titulo del combo
+	ActualizarTituloCombo("Seleccione un dispositivo...");
 }

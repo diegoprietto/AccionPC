@@ -46,6 +46,14 @@ block VistaCuerpo
 								i.fa.fa-volume-up.fa-stack-1x
 								i.fa.fa-ban.fa-stack-2x.text-danger
 
+				br
+
+				.btn-group
+					button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+						span#TituloComboDispositivos
+							| Cargando...
+						span.caret(style="margin-left: 5px")
+					ul.dropdown-menu#DatosComboDispositivos
 
 	.btn-toolbar(role='toolbar', aria-label='...')
 		.panel.panel-success
